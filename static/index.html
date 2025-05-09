@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Submittal Reviewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Construction Submittal Reviewer</h1>
+        
+        <div class="api-key-section">
+            <input type="password" id="apiKey" placeholder="Enter your OpenAI API Key">
+            <button onclick="saveApiKey()">Save API Key</button>
+        </div>
+
+<div class="model-selection">
+    <label for="modelSelect">Select AI Model:</label>
+    <select id="modelSelect" class="model-select">
+        <option value="gpt-4-turbo-preview">GPT-4 Turbo (Latest version, fastest GPT-4)</option>
+        <option value="gpt-4-vision-preview">GPT-4 Vision (Can analyze images in PDFs)</option>
+        <option value="gpt-4">GPT-4 (Original version)</option>
+        <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Fastest, most affordable)</option>
+    </select>
+    <button onclick="saveModelPreference()" class="model-save-btn">Save Preference</button>
+</div>
+
+        <div class="upload-container">
+            <div class="drop-zone" id="submittalZone">
+                <div class="drop-zone-text">
+                    <span>Drop Submittal PDF here</span>
+                    <span>or</span>
+                    <button class="browse-btn">Browse Files</button>
+                </div>
+                <input type="file" id="submittalFile" accept=".pdf" hidden>
+                <div class="file-info" id="submittalInfo"></div>
+            </div>
+
+            <div class="drop-zone" id="specZone">
+                <div class="drop-zone-text">
+                    <span>Drop Specification PDF here</span>
+                    <span>or</span>
+                    <button class="browse-btn">Browse Files</button>
+                </div>
+                <input type="file" id="specFile" accept=".pdf" hidden>
+                <div class="file-info" id="specInfo"></div>
+            </div>
+        </div>
+
+        <button id="analyzeBtn" class="analyze-btn" disabled>Analyze Documents</button>
+
+        <div class="results-container" id="results">
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing documents...</p>
+            </div>
+            <div class="review-section" id="reviewSection">
+                <h2>Review Results</h2>
+                <div class="review-content" id="reviewContent"></div>
+            </div>
+        </div>
+<div class="chat-container" id="chatContainer" style="display: none;">
+    <h2>Follow-up Questions</h2>
+    <div class="chat-messages" id="chatMessages">
+        <!-- Chat messages will appear here -->
+    </div>
+    <div class="chat-input-container">
+        <input type="text" id="chatInput" placeholder="Ask a follow-up question...">
+        <button id="sendChat" class="chat-send-btn">Send</button>
+    </div>
+</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

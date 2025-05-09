@@ -1,0 +1,280 @@
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #1976D2;
+    --background-color: #f5f5f5;
+    --border-color: #ddd;
+    --text-color: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--secondary-color);
+}
+
+.api-key-section {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.api-key-section input {
+    padding: 0.5rem 1rem;
+    width: 300px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+
+.api-key-section button {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.api-key-section button:hover {
+    background-color: var(--secondary-color);
+}
+
+.upload-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.drop-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    background-color: white;
+    transition: border-color 0.3s;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-zone.drag-over {
+    border-color: var(--primary-color);
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.drop-zone-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.browse-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.browse-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.file-info {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.analyze-btn {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.analyze-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.analyze-btn:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+.results-container {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loading {
+    text-align: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.review-section {
+    margin-top: 1rem;
+}
+
+.review-section h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.review-content {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    white-space: pre-wrap;
+}
+/* Add these styles at the end of your existing styles.css */
+.chat-container {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.user-message {
+    background-color: #e3f2fd;
+    margin-left: 20%;
+    margin-right: 0;
+    padding: 10px;
+    border-radius: 15px 15px 0 15px;
+}
+
+.assistant-message {
+    background-color: #f5f5f5;
+    margin-right: 20%;
+    margin-left: 0;
+    padding: 10px;
+    border-radius: 15px 15px 15px 0;
+}
+
+.chat-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+#chatInput {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.chat-send-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-send-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.message-time {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Add these styles to your existing CSS */
+.model-selection {
+    margin: 1rem 0 2rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.model-select {
+    padding: 0.5rem;
+    margin: 0 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    min-width: 250px;
+}
+
+.model-save-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.model-save-btn:hover {
+    background-color: var(--secondary-color);
+}
