@@ -103,52 +103,63 @@ def analyze_with_openai(api_key, submittal_text, spec_text, submittal_name, spec
     try:
         client = OpenAI(api_key=api_key)
         
-        # Use JSON mode to get structured output - this will completely fix the table issue
+        # Enhanced prompt with better product-specific analysis
         messages = [
             {
                 "role": "system",
-                "content": """You are a construction specification reviewer assistant. Create a structured compliance report with these exact sections:
+                "content": """You are a construction specification reviewer assistant specialized in reviewing submittals against specifications.
 
-1. Submittal Summary: Identify all products being submitted, including manufacturer name, model numbers, and key specifications.
+IMPORTANT - READ CAREFULLY:
+- The SPECIFICATION document covers requirements for multiple potential products/materials
+- The SUBMITTAL document is typically for a SPECIFIC PRODUCT or set of products, NOT everything in the spec
+- Your task is to:
+  1. Identify what specific product(s) are being submitted
+  2. Find requirements in the specification that specifically apply to those submitted products
+  3. Check if the submittal meets those specific requirements
 
-2. Applicable Specifications: List all specification sections that apply to this submittal.
+When reviewing:
+- DO NOT expect the submittal to meet ALL requirements in the specification
+- ONLY evaluate against requirements that apply to the product(s) being submitted
+- For example, if only geotextile fabric is submitted, only check geotextile fabric requirements even if the spec also covers storm structures
 
-3. Compliance Assessment: Provide a point-by-point comparison of specification requirements versus submittal information.
-
-4. Critical Issues: List any major non-compliance issues that would require rejection.
-
-5. Recommendations: Provide a clear recommendation and list any required corrections.
-
-You MUST return your response as properly formatted JSON with the following structure:
+Return your findings as properly formatted JSON with the following structure:
 {
-  "submittalSummary": "text summary with bullet points using * format",
-  "applicableSpecs": "text listing all applicable specifications using * bullet points",
+  "submittalSummary": "Clear identification of what specific product(s) are being submitted",
+  "applicableSpecs": "List specification sections that SPECIFICALLY APPLY to the submitted product(s)",
   "complianceAssessment": [
     {
-      "requirement": "Section X.X: Specific requirement text",
-      "submittalInfo": "What the submittal provides",
-      "status": "COMPLIANT" (or "NON-COMPLIANT", "PARTIALLY COMPLIANT", or "INFORMATION MISSING")
+      "requirement": "Section X.X: [Exact requirement FROM THE SPECIFICATION that applies to the submitted product]",
+      "submittalInfo": "What the submittal provides related to this requirement",
+      "status": "COMPLIANT or NON-COMPLIANT or PARTIALLY COMPLIANT or INFORMATION MISSING"
     },
-    // more items...
+    // additional requirements...
   ],
-  "criticalIssues": "list of critical issues using * bullet points, or 'No critical issues identified' if none",
+  "criticalIssues": "List of non-compliance issues requiring attention, or 'No critical issues identified' if none",
   "recommendation": {
-    "decision": "APPROVE" (or "APPROVE WITH COMMENTS", "REVISE AND RESUBMIT", or "REJECTED"),
-    "comments": "text with bullet points using * format explaining the decision"
+    "decision": "APPROVE or APPROVE WITH COMMENTS or REVISE AND RESUBMIT or REJECTED",
+    "comments": "Explanation of the decision with specific items that need correction"
   }
-}"""
+}
+
+REMINDERS:
+- First correctly identify what product(s) are being submitted
+- Only list requirements that specifically apply to those products
+- Don't expect the submittal to address requirements for products not being submitted
+- Ensure section references are accurate from the specification document"""
             },
             {
                 "role": "user",
-                "content": f"""Please review the following product submittal for compliance with the project specifications:
+                "content": f"""Please review this submittal document against the specification document to determine compliance:
 
-SUBMITTAL ({submittal_name}):
-{submittal_text[:15000]}{"... [content truncated due to length]" if len(submittal_text) > 15000 else ""}
-
-SPECIFICATION ({spec_name}):
+SPECIFICATION DOCUMENT ({spec_name}):
+This document contains requirements for various products/materials:
 {spec_text[:15000]}{"... [content truncated due to length]" if len(spec_text) > 15000 else ""}
 
-Remember to return your analysis in the required JSON format."""
+SUBMITTAL DOCUMENT ({submittal_name}):
+This document is submitting specific product(s) for approval:
+{submittal_text[:15000]}{"... [content truncated due to length]" if len(submittal_text) > 15000 else ""}
+
+First identify what specific product(s) are being submitted, then check if they comply with the applicable requirements for those specific products in the specification."""
             }
         ]
         
